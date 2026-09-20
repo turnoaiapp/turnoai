@@ -1,66 +1,45 @@
-// Two small enhancements: a theme toggle and a copy-link button. Everything
-// here is optional — the page is fully readable with JavaScript turned off,
-// and the toolbar stays hidden until this file runs.
+document.addEventListener("DOMContentLoaded", () => {
+  // Navegación suave para los enlaces internos
+  document.querySelectorAll('a[href^="#"]').forEach((link) => {
+    link.addEventListener("click", (event) => {
+      const targetId = link.getAttribute("href");
 
-const root = document.documentElement;
-const STORAGE_KEY = 'theme';
+      if (!targetId || targetId === "#") {
+        return;
+      }
 
-const prefersDark = () =>
-  window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const target = document.querySelector(targetId);
 
-const activeTheme = () =>
-  root.dataset.theme || (prefersDark() ? 'dark' : 'light');
+      if (target) {
+        event.preventDefault();
 
-const themeToggle = document.getElementById('theme-toggle');
-const themeToggleLabel = document.getElementById('theme-toggle-label');
+        target.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+    });
+  });
 
-const syncThemeLabel = () => {
-  themeToggleLabel.textContent =
-    activeTheme() === 'dark' ? 'Switch to light theme' : 'Switch to dark theme';
-};
+  // Año automático del footer
+  const copyright = document.querySelector(".copyright");
 
-// Restore a previous choice. With nothing stored we leave the attribute off so
-// the CSS keeps following the operating system setting.
-try {
-  const stored = localStorage.getItem(STORAGE_KEY);
-  if (stored === 'dark' || stored === 'light') {
-    root.dataset.theme = stored;
+  if (copyright) {
+    copyright.textContent = `© ${new Date().getFullYear()} TurnoAI. Todos los derechos reservados.`;
   }
-} catch {
-  // Private browsing can block storage. Not worth telling anyone about.
-}
 
-themeToggle.addEventListener('click', () => {
-  root.dataset.theme = activeTheme() === 'dark' ? 'light' : 'dark';
-  syncThemeLabel();
-  try {
-    localStorage.setItem(STORAGE_KEY, root.dataset.theme);
-  } catch {
-    // See above.
-  }
+  // Preparación para futuras acciones de autenticación
+  document.querySelectorAll('a[href="#login"]').forEach((link) => {
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      window.location.hash = "login";
+    });
+  });
+
+  document.querySelectorAll('a[href="#registro"]').forEach((link) => {
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      window.location.hash = "registro";
+    });
+  });
 });
-
-const copyButton = document.getElementById('copy-link');
-const copyIcon = document.getElementById('copy-link-icon').firstElementChild;
-const copyStatus = document.getElementById('copy-status');
-let resetCopyTimer;
-
-copyButton.addEventListener('click', async () => {
-  try {
-    await navigator.clipboard.writeText(window.location.href);
-    copyIcon.setAttribute('href', '#icon-check');
-    copyStatus.textContent = 'Link copied';
-  } catch {
-    copyStatus.textContent = 'Could not copy the link';
-    return;
-  }
-
-  clearTimeout(resetCopyTimer);
-  resetCopyTimer = setTimeout(() => {
-    copyIcon.setAttribute('href', '#icon-copy');
-    copyStatus.textContent = '';
-  }, 2000);
-});
-
-syncThemeLabel();
-document.getElementById('toolbar').hidden = false;
