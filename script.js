@@ -1,11 +1,24 @@
 import { supabase } from "./supabase.js";
 supabase.auth.getSession().then(({ error }) => {
-  if (error) {
-    console.error("TurnoAI - Error de conexión con Supabase:", error);
-    return;
-  }
+  const status = document.createElement("div");
 
-  console.log("TurnoAI - Supabase conectado correctamente.");
+  status.style.position = "fixed";
+  status.style.bottom = "20px";
+  status.style.left = "20px";
+  status.style.right = "20px";
+  status.style.padding = "14px";
+  status.style.background = error ? "#b42318" : "#13795b";
+  status.style.color = "#fff";
+  status.style.borderRadius = "10px";
+  status.style.zIndex = "9999";
+  status.style.fontFamily = "Arial, sans-serif";
+  status.style.textAlign = "center";
+
+  status.textContent = error
+    ? "TurnoAI: error al conectar con Supabase."
+    : "TurnoAI: Supabase conectado correctamente.";
+
+  document.body.appendChild(status);
 });
 document.addEventListener("DOMContentLoaded", () => {
   // Navegación suave para los enlaces internos
