@@ -1,3 +1,4 @@
+import { supabase } from "./supabase.js";
 document.addEventListener("DOMContentLoaded", () => {
   // Navegación suave para los enlaces internos
   document.querySelectorAll('a[href^="#"]').forEach((link) => {
