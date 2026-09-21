@@ -1,4 +1,12 @@
 import { supabase } from "./supabase.js";
+supabase.auth.getSession().then(({ error }) => {
+  if (error) {
+    console.error("TurnoAI - Error de conexión con Supabase:", error);
+    return;
+  }
+
+  console.log("TurnoAI - Supabase conectado correctamente.");
+});
 document.addEventListener("DOMContentLoaded", () => {
   // Navegación suave para los enlaces internos
   document.querySelectorAll('a[href^="#"]').forEach((link) => {
