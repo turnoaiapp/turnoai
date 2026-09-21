@@ -202,15 +202,66 @@
       </section>
 
       <section class="cta" id="registro">
-        <div>
-          <span class="eyebrow">TURNOS MÁS SIMPLES</span>
-          <h2>Empezá a construir una mejor forma de gestionar tu negocio.</h2>
-        </div>
+  <div>
+    <span class="eyebrow">EMPEZÁ CON TURNOAI</span>
 
-        <a class="button button--primary button--large" href="#login">
-          Crear mi cuenta
-        </a>
+    <h2>Creá tu cuenta.</h2>
+
+    <p>
+      Registrate y empezá a configurar tu negocio en TurnoAI.
+    </p>
+
+    <form id="register-form">
+      <label for="register-name">Tu nombre</label>
+      <input
+        type="text"
+        id="register-name"
+        name="name"
+        placeholder="Ej. Juan Pérez"
+        required
+      />
+
+      <label for="register-business">Nombre de tu negocio</label>
+      <input
+        type="text"
+        id="register-business"
+        name="business"
+        placeholder="Ej. Barbería Central"
+        required
+      />
+
+      <label for="register-email">Email</label>
+      <input
+        type="email"
+        id="register-email"
+        name="email"
+        placeholder="tu@email.com"
+        required
+      />
+
+      <label for="register-password">Contraseña</label>
+      <input
+        type="password"
+        id="register-password"
+        name="password"
+        placeholder="Mínimo 6 caracteres"
+        minlength="6"
+        required
+      />
+
+      <button
+        type="submit"
+        class="button button--primary button--large"
+      >
+        Crear mi cuenta
+      </button>
+
+      <p id="register-message"></p>
+    </form>
+  </div>
       </section>
+      
+        
     </main>
 
     <footer class="site-footer" id="contacto">
